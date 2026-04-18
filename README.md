@@ -2,9 +2,9 @@
 
 ## 📌 Overview
 
-This project demonstrates a complete **end-to-end data engineering pipeline** built using AWS services.
+This project demonstrates a complete **end-to-end data engineering pipeline** using AWS services.
 
-It ingests data from multiple sources, processes it using ETL pipelines, and builds a **star schema data warehouse** for analytics.
+It ingests data from multiple sources (PostgreSQL, MySQL, CSV), processes it using ETL pipelines, and builds a **star schema data warehouse** for analytics.
 
 ---
 
@@ -13,15 +13,15 @@ It ingests data from multiple sources, processes it using ETL pipelines, and bui
 ```
 PostgreSQL / MySQL / CSV
         ↓
-Python Incremental Pipeline
+Python Incremental ETL
         ↓
-S3 Raw (Bronze)
+S3 Raw Layer (Bronze)
         ↓
-AWS Glue ETL
+AWS Glue (Transformation)
         ↓
-S3 Processed (Silver)
+S3 Processed Layer (Silver)
         ↓
-Glue Jobs (Fact + Dimensions)
+Fact + Dimension Tables
         ↓
 S3 Gold Layer
         ↓
@@ -32,23 +32,23 @@ Athena (Query Layer)
 
 ## ⚙️ Technologies Used
 
-* Python (ETL scripts)
-* AWS S3 (Data Lake)
-* AWS Glue (ETL)
-* AWS Glue Crawler (Schema detection)
-* Athena (Query engine)
-* PostgreSQL / MySQL
+* Python
+* AWS S3
+* AWS Glue
+* AWS Glue Crawler
+* Amazon Athena
+* PostgreSQL
+* MySQL
 
 ---
 
 ## 🔄 Key Features
 
-* ✅ Multi-source data ingestion
-* ✅ Incremental data loading
-* ✅ Automated ETL pipelines
-* ✅ Generic Glue job (scalable design)
-* ✅ Star schema data warehouse
+* ✅ Incremental data loading using timestamps
+* ✅ Multi-source ingestion
+* ✅ Generic Glue job (handles multiple tables)
 * ✅ Parquet-based optimization
+* ✅ Star schema design
 
 ---
 
@@ -56,14 +56,11 @@ Athena (Query Layer)
 
 ### 🟤 Bronze (Raw)
 
-* Stored in S3
-* No transformation
+* Stores raw data in S3
 
 ### ⚪ Silver (Processed)
 
-* Cleaned data
-* Deduplicated
-* Stored as Parquet
+* Cleaned and deduplicated data
 
 ### 🟡 Gold (Warehouse)
 
@@ -84,7 +81,22 @@ dim_products — fact_sales — dim_stores
 
 ---
 
-## 📊 Sample Query (Athena)
+## ▶️ How to Run
+
+1. Update database credentials in scripts
+2. Run pipeline:
+
+```
+python scripts/run_pipeline.py
+```
+
+3. Upload data to S3
+4. Run Glue jobs
+5. Query using Athena
+
+---
+
+## 📊 Sample Query
 
 ```sql
 SELECT SUM(total_amount) AS revenue
@@ -93,38 +105,22 @@ FROM fact_sales;
 
 ---
 
-## 🚀 How to Run
-
-1. Run extraction scripts:
-
-```bash
-python run_pipeline.py
-```
-
-2. Upload data to S3
-
-3. Run Glue jobs
-
-4. Query using Athena
-
----
-
 ## 🎯 Interview Talking Points
 
 * Incremental ETL design
-* Data lake architecture (S3)
-* Glue vs Spark processing
+* Data lake architecture
+* Glue vs traditional ETL
 * Star schema modeling
-* Parquet optimization
+* Cost optimization using Parquet
 
 ---
 
 ## 📄 Documentation
 
-See `/docs/project_documentation.docx` for full details.
+Detailed documentation available in `/docs/`
 
 ---
 
 ## 👨‍💻 Author
 
-Tejas Varma
+Tejas
